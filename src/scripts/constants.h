@@ -1,0 +1,11 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 800
+#define TILE_WIDTH 100
+#define TILE_HEIGHT 200
+#define TILE_SPEED 400
+#define MAX_TILES 50
+
+#endif
