@@ -1,7 +1,7 @@
 #include "raylib.h"
-#include "src/scripts/tile.h"
-#include "src/scripts/tile.c"
-#include "src/scripts/constants.h"
+#include "data/scripts/tile.c"
+#include "data/scripts/save.c"
+#include "data/scripts/constants.h"
 #include <stdlib.h>
 #include <time.h>
 
@@ -19,7 +19,7 @@ int main(void) {
     
     int score = 0;
     float spawnTime = 0.0f;
-    float timeBetweenSpawns = 1.0f;
+    float timeBetweenSpawns = 0.5f;
 
     SetTargetFPS(60);
 
@@ -113,13 +113,14 @@ int main(void) {
         for (int i = 0; i < 6; i++) {
             DrawRectangle(i * TILE_WIDTH, SCREEN_HEIGHT - 50, TILE_WIDTH, 50, LIGHTGRAY);
             int textWidth = MeasureText(keyLabels[i], 20);
-            DrawText(keyLabels[i], i * TILE_WIDTH + (TILE_WIDTH - textWidth) / 2, SCREEN_HEIGHT - 40, 20, DARKGRAY);
+            DrawText(keyLabels[i], i * TILE_WIDTH + (TILE_WIDTH - textWidth) / 2, SCREEN_HEIGHT - 35, 20, DARKGRAY);
         }
 
         DrawText(TextFormat("Score: %d", score), 10, 10, 20, DARKGRAY);
         EndDrawing();
     }
-
+    
+    SaveGame(score);
     CloseWindow();
     return 0;
 }
