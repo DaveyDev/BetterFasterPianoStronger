@@ -7,6 +7,8 @@
 #include "data/scripts/title.c"
 #include "data/scripts/gameplay.c"
 #include "data/scripts/textures.c"
+#include "data/scripts/textures.h"
+#include "data/scripts/menuScreen.c"
 #include <stdlib.h>
 #include <time.h>
 
@@ -24,6 +26,7 @@ int main(void) {
     
     LoadGame();
     LoadTextures();
+    Font playtoy = LoadFontEx("data/fonts/playtoy.ttf", 32, 0, 0);
     
     
     SetTargetFPS(60);
@@ -33,8 +36,8 @@ int main(void) {
             case LOGO:
                 UpdateDrawLogoScreen(&currentScreen, logoTexture);
                 break;
-            case TITLE:
-                //UpdateDrawTitleScreen(&currentScreen);
+            case MENU:
+                UpdateDrawMenuScreen(&currentScreen, playtoy);
                 break;
             case GAMEPLAY:
                 UpdateDrawGameplayScreen(&currentScreen, &tileManager);
@@ -43,11 +46,13 @@ int main(void) {
                 //UpdateDrawEndingScreen(&currentScreen);
                 break;
             default:
+                WindowShouldClose();
                 break;
         }
     }
     
     UnloadTextures();
+    UnloadFont(playtoy);
     
     SaveGame(score);
     CloseWindow();

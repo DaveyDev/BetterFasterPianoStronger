@@ -1,5 +1,4 @@
 #include "raylib.h"
-//#include "scene.h" // Include the header file
 
 float logoTime = 0.0f;
 float setLogoTime = 2.0f;
@@ -17,12 +16,12 @@ void UpdateDrawLogoScreen(GameScreen *currentScreen, Texture2D logoTexture) {
     // Spawn a new tile in a random column
     if (logoTime >= setLogoTime) {
         logoTime = 0.0f;
-        *currentScreen = GAMEPLAY;
+        *currentScreen = MENU;
         
     }
     EndDrawing();
     
     if (IsKeyPressed(KEY_ENTER)) {
-        *currentScreen = GAMEPLAY; // Change current screen
+        *currentScreen = MENU; // Change current screen
     }
 }

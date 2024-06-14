@@ -7,6 +7,14 @@
     float timeBetweenSpawns = 0.5f;
 
 void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManager) {
+    
+    
+    static bool firstEnter = true;
+    if (firstEnter) {
+        ResetTiles(timeManager);
+        firstEnter = false;
+    }
+    
     float deltaTime = GetFrameTime();
         spawnTime += deltaTime;
 
@@ -20,6 +28,20 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManage
         // Update tiles
         for (int i = 0; i < 6; i++) {
             UpdateTiles(&timeManager[i], deltaTime);
+            
+                    // Check if any tiles go off the screen
+        for (int j = 0; j < MAX_TILES; j++) {
+            if (timeManager[i].tiles[j].active && timeManager[i].tiles[j].rect.y + TILE_HEIGHT > SCREEN_HEIGHT + 30) {
+                timeManager[i].tiles[j].active = false;
+                timeManager[i].activeCount--;
+                //score -= 3; // Deduct points for missing a tile
+                firstEnter = true;
+                score = 0;
+                *currentScreen = MENU;
+                
+            }
+        }
+
         }
 
         // Check for user input
@@ -101,4 +123,13 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManage
 
         DrawText(TextFormat("Score: %d", score), 10, 10, 20, DARKGRAY);
         EndDrawing();
+}
+
+void ResetTiles(TileManager *timeManager) {
+    for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < MAX_TILES; j++) {
+            timeManager[i].tiles[j].active = false;
+        }
+        timeManager[i].activeCount = 0;
+    }
 }
