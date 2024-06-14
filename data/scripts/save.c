@@ -19,3 +19,6 @@ void SaveGame(int score) {
 
     fclose(file); // Close the file after writing
 }
+
+void LoadGame(){
+}
