@@ -9,6 +9,7 @@
 #include "data/scripts/textures.c"
 #include "data/scripts/textures.h"
 #include "data/scripts/menuScreen.c"
+#include "data/scripts/scoreScreen.c"
 #include <stdlib.h>
 #include <time.h>
 
@@ -42,8 +43,8 @@ int main(void) {
             case GAMEPLAY:
                 UpdateDrawGameplayScreen(&currentScreen, tileManager);
                 break;
-            case ENDING:
-                //UpdateDrawEndingScreen(&currentScreen);
+            case SCORE:
+                UpdateDrawScoreScreen(&currentScreen);
                 break;
             default:
                 WindowShouldClose();

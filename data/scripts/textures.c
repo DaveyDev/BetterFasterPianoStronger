@@ -3,6 +3,7 @@
 
 
 Texture2D logoTexture;
+Texture2D keysTexture;
 
 
 
@@ -10,12 +11,15 @@ Texture2D logoTexture;
 void LoadTextures(){
     
      
-    logoTexture = LoadTexture("data/textures/logo.png"); 
+    logoTexture = LoadTexture("data/textures/logo.png");
+    keysTexture = LoadTexture("data/textures/keys.png");
+    
     
 }
 
 void UnloadTextures(){
     
     UnloadTexture(logoTexture);
+    UnloadTexture(keysTexture);
     
 }

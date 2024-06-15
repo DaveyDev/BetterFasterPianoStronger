@@ -81,6 +81,10 @@ void FreeLevelData() {
     int score = 0;
     float spawnTime = 0.0f;
     float timeBetweenSpawns = 0.5f;
+    
+    Color buttonColors[6]; // Add array to keep track of button colors
+    bool buttonPressed[6]; // Add array to keep track of key pressed state
+
 
 void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManager) {
     
@@ -89,11 +93,16 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManage
     static float gameTime = 0.0f;
     
     if (firstEnter) {
+        score = 0;
         ResetTiles(timeManager);
         currentLevelIndex = 0;
         gameTime = 0.0f;
         LoadLevel("levels/level1/tiles.txt");
         firstEnter = false;
+        for (int i = 0; i < 6; i++) {
+            buttonColors[i] = LIGHTGRAY;  // Initialize button colors to default
+            buttonPressed[i] = false; // Initialize button pressed state
+        }        
     }
     
     //float deltaTime = GetFrameTime();
@@ -121,8 +130,8 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManage
             
             FreeLevelData();
             firstEnter = true;
-            score = 0;            
-            *currentScreen = MENU;
+            //score = 0;            
+            *currentScreen = SCORE;
             return; // Exit function early to avoid further updates/draws
         }        
         
@@ -149,85 +158,49 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManage
 
         }
 
-        // Check for user input
-        if (IsKeyPressed(KEY_A)) {
-            for (int i = 0; i < MAX_TILES; i++) {
-                if (timeManager[0].tiles[i].active && timeManager[0].tiles[i].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50) {
-                    timeManager[0].tiles[i].active = false;
+            // Check for user input
+    for (int i = 0; i < 6; i++) {
+        int keyPressed = 0;
+        switch (i) {
+            case 0: keyPressed = IsKeyPressed(KEY_A); break;
+            case 1: keyPressed = IsKeyPressed(KEY_S); break;
+            case 2: keyPressed = IsKeyPressed(KEY_D); break;
+            case 3: keyPressed = IsKeyPressed(KEY_J); break;
+            case 4: keyPressed = IsKeyPressed(KEY_K); break;
+            case 5: keyPressed = IsKeyPressed(KEY_L); break;
+        }
+
+        if (keyPressed) {
+            bool hit = false;
+            for (int j = 0; j < MAX_TILES; j++) {
+                if (timeManager[i].tiles[j].active && timeManager[i].tiles[j].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50) {
+                    timeManager[i].tiles[j].active = false;
                     score += 5;
-                    timeManager[0].activeCount--;
+                    timeManager[i].activeCount--;
+                    buttonColors[i] = GREEN;  // Set button color to green for correct hit
+                    hit = true;
                     break;
-                } else { 
-                score -= 3; 
-                break;
                 }
             }
-        }
-        if (IsKeyPressed(KEY_S)) {
-            for (int i = 0; i < MAX_TILES; i++) {
-                if (timeManager[1].tiles[i].active && timeManager[1].tiles[i].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50) {
-                    timeManager[1].tiles[i].active = false;
-                    score += 5;
-                    timeManager[1].activeCount--;
-                    break;
-                } else { 
-                score -= 3; 
-                break;
-                }
+            if (!hit) {
+                score -= 3;
+                buttonColors[i] = RED;  // Set button color to red for incorrect hit
             }
+            buttonPressed[i] = true;  // Mark button as pressed
+        } else {
+            buttonPressed[i] = false;  // Mark button as not pressed
         }
-        if (IsKeyPressed(KEY_D)) {
-            for (int i = 0; i < MAX_TILES; i++) {
-                if (timeManager[2].tiles[i].active && timeManager[2].tiles[i].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50) {
-                    timeManager[2].tiles[i].active = false;
-                    score += 5;
-                    timeManager[2].activeCount--;
-                    break;
-                } else { 
-                score -= 3; 
-                break;
-                }
-            }
+    }
+    
+    
+    
+    // Reset button colors if keys are not pressed
+    for (int i = 0; i < 6; i++) {
+        if (!buttonPressed[i]) {
+            buttonColors[i] = LIGHTGRAY;
         }
-        if (IsKeyPressed(KEY_J)) {
-            for (int i = 0; i < MAX_TILES; i++) {
-                if (timeManager[3].tiles[i].active && timeManager[3].tiles[i].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50) {
-                    timeManager[3].tiles[i].active = false;
-                    score += 5;
-                    timeManager[3].activeCount--;
-                    break;
-                } else { 
-                score -= 3; 
-                break;
-                }
-            }
-        }
-        if (IsKeyPressed(KEY_K)) {
-            for (int i = 0; i < MAX_TILES; i++) {
-                if (timeManager[4].tiles[i].active && timeManager[4].tiles[i].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50) {
-                    timeManager[4].tiles[i].active = false;
-                    score += 5;
-                    timeManager[4].activeCount--;
-                    break;
-                } else { 
-                score -= 3; 
-                break;
-                }
-            }
-        }
-        if (IsKeyPressed(KEY_L)) {
-            for (int i = 0; i < MAX_TILES; i++) {
-                if (timeManager[5].tiles[i].active && timeManager[5].tiles[i].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50) {
-                    timeManager[5].tiles[i].active = false;
-                    score += 5;
-                    timeManager[5].activeCount--;
-                    break;
-                } else { 
-                score -= 3; 
-                break;
-                }
-            }
-        }
+    }
+
 
         // Draw everything
         BeginDrawing();
@@ -239,7 +212,7 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *timeManage
 
         // Draw buttons with text
         for (int i = 0; i < 6; i++) {
-            DrawRectangle(i * TILE_WIDTH, SCREEN_HEIGHT - 50, TILE_WIDTH, 50, LIGHTGRAY);
+            DrawRectangle(i * TILE_WIDTH, SCREEN_HEIGHT - 50, TILE_WIDTH, 50, buttonColors[i]);
             int textWidth = MeasureText(keyLabels[i], 20);
             DrawText(keyLabels[i], i * TILE_WIDTH + (TILE_WIDTH - textWidth) / 2, SCREEN_HEIGHT - 35, 20, DARKGRAY);
         }
