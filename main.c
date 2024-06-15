@@ -40,7 +40,7 @@ int main(void) {
                 UpdateDrawMenuScreen(&currentScreen, playtoy);
                 break;
             case GAMEPLAY:
-                UpdateDrawGameplayScreen(&currentScreen, &tileManager);
+                UpdateDrawGameplayScreen(&currentScreen, tileManager);
                 break;
             case ENDING:
                 //UpdateDrawEndingScreen(&currentScreen);

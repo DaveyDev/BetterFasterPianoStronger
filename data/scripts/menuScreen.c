@@ -17,7 +17,7 @@ float fontSize = 32.0f;
 float spacing = 2.0f;
 Color tint = BLACK;
 
-// Custom function to draw text with adjusted position. XD i really wanted to make this font work
+// Custom function to draw text with adjusted position. XD i really wanted to make this font work //next update make it work properly
 void DrawTextExAdjusted(Font font, const char *text, Vector2 position, float fontSize, float spacing, Color tint) {
     Vector2 adjustedPosition = position;
 
@@ -81,7 +81,7 @@ void UpdateDrawMenuScreen(GameScreen *currentScreen, Font playtoy) {
     // Uncomment and adjust if needed
     // DrawTexture(logoTexture, GetScreenWidth()/2 - 128, GetScreenHeight()/2 - 128, WHITE);
 
-    float deltaTime = GetFrameTime();
+    //float deltaTime = GetFrameTime();
     // Uncomment and adjust if needed
     // logoTime += deltaTime;
 
