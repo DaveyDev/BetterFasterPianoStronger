@@ -1,5 +1,5 @@
 #include "raylib.h"
-//#include "scene.h" // Include the header file
+
 #include "font.c"
 
 Vector2 mousePoint = {};

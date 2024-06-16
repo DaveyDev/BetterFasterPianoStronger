@@ -1,30 +1,43 @@
 #include "raylib.h"
-//#include "font.c"
-
-const char *scoreText = "SCORE";
-Vector2 scorePosition = { 100, 300 };
-float scoreFontSize = 32.0f;
-//float spacing = 2.0f;
-//Color tint = BLACK;
 
 
-    
-void UpdateDrawScoreScreen(GameScreen *currentScreen, Font playtoy) {
+void UpdateDrawScoreScreen(GameScreen *currentScreen, Font schluber) {
+
     BeginDrawing();
     ClearBackground(RAYWHITE);
     DrawText("Betoniarz to pedal", 20, 20, 40, LIGHTGRAY);
     //DrawTexture(logoTexture, GetScreenWidth()/2 - 128, GetScreenHeight()/2 - 128, WHITE);
-    
-    // Use the custom drawing function
-    DrawTextExAdjusted(playtoy, scoreText, scorePosition, scoreFontSize, spacing, tint);
-    
-    int testscore = score;
-    DrawText(TextFormat("BEST: %i", testscore), 40, 200, 20, LIGHTGRAY);
-    playtoy;
+   
+    if(score > bestScore) bestScore = score;
 
+   
+
+   
+   
+    //int testscore = score;
+    //DrawText(TextFormat("SCORE: %i", score), 40, 150, 32, DARKGRAY);
+    //DrawText(TextFormat("BEST: %i", bestScore), 45, 200, 32, DARKGRAY);
+    DrawTextEx(schluber, TextFormat("SCORE: %i", score), (Vector2){ 120, 150 }, 48, 0, DARKGRAY);
+    DrawTextEx(schluber, TextFormat("BEST: %i", bestScore), (Vector2){ 120, 200 }, 48, 0, DARKGRAY);
+    
+    //DrawText(TextFormat("PRESS SPACE TO CONTINUE"), 120, 400, 25, DARKGRAY);
+    //DrawText(TextFormat("R - RESET BEST SCORE"), 120, 450, 25, DARKGRAY);
+    
+    DrawTextEx(schluber, TextFormat("PRESS SPACE TO CONTINUE"), (Vector2){ 120, 400 }, 32, 0, DARKGRAY);
+    DrawTextEx(schluber, TextFormat("R - RESET SCORE"), (Vector2){ 120, 450 }, 32, 0, DARKGRAY);
+    
+    
     EndDrawing();
     
-    if (IsKeyPressed(KEY_ENTER)) {
+    if(IsKeyPressed('R')){
+        score = 0;
+        SaveLevelScore(0);
+        LoadLevelScore();
+        
+    }
+    
+    if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_ENTER)) {
+        SaveLevelScore(bestScore);
         *currentScreen = MENU; // Change current screen
     }
 }

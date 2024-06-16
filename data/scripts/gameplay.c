@@ -1,15 +1,5 @@
 #include "stdlib.h"
-
-
-typedef struct {
-    int timestamp;
-    int columns[6];
-    bool isEndCondition;
-} LevelData;
-
-LevelData *levelData = NULL;
-int levelDataCount = 0;
-int currentLevelIndex = 0;
+#include "levelData.h" // Include the header file
 
 
 void ResetTiles(TileManager *tileManager) {
@@ -22,59 +12,6 @@ void ResetTiles(TileManager *tileManager) {
 }
 
 
-
-void LoadLevel(const char *filename) {
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        printf("Failed to open level file.\n");
-        return;
-    }
-
-    char line[256];
-    int count = 0;
-
-    while (fgets(line, sizeof(line), file)) {
-        count++;
-    }
-
-    rewind(file);
-    levelData = (LevelData *)malloc(count * sizeof(LevelData));
-    levelDataCount = count;
-    count = 0;
-
-    while (fgets(line, sizeof(line), file)) {
-        int result = sscanf(line, "%d %d %d %d %d %d %d",
-               &levelData[count].timestamp,
-               &levelData[count].columns[0],
-               &levelData[count].columns[1],
-               &levelData[count].columns[2],
-               &levelData[count].columns[3],
-               &levelData[count].columns[4],
-               &levelData[count].columns[5]);
-               
-        // Check if the line is an end condition (all zeros after timestamp)
-        if (result == 7 && levelData[count].columns[0] == 0 && levelData[count].columns[1] == 0 &&
-            levelData[count].columns[2] == 0 && levelData[count].columns[3] == 0 &&
-            levelData[count].columns[4] == 0 && levelData[count].columns[5] == 0) {
-            levelData[count].isEndCondition = true;
-        } else {
-            levelData[count].isEndCondition = false;
-        }
-               
-        count++;
-    }
-
-    fclose(file);
-}
-
-// Function to free allocated memory for levelData
-void FreeLevelData() {
-    if (levelData != NULL) {
-        free(levelData);
-        levelData = NULL; // Optional: Set pointer to NULL after freeing
-        levelDataCount = 0;
-    }
-}
 
 
     const char *keyLabels[6] = { "A", "S", "D", "J", "K", "L" };
@@ -102,6 +39,7 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
         currentLevelIndex = 0;
         gameTime = 0.0f;
         LoadLevel("levels/level1/tiles.txt");
+        LoadLevelScore();
         firstEnter = false;
         for (int i = 0; i < 6; i++) {
             buttonColors[i] = LIGHTGRAY;  // Initialize button colors to default
@@ -185,7 +123,7 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
 
         
         if (keyPressed) {
-            bool hit = false;
+            //bool hit = false;
             for (int j = 0; j < MAX_TILES; j++) {
                 if (tileManager[i].tiles[j].active && tileManager[i].tiles[j].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50 && tileManager[i].tiles[j].rect.y + TILE_HEIGHT <= SCREEN_HEIGHT + 50) {
                     tileManager[i].tiles[j].wasHit = true;
@@ -197,7 +135,7 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
                     }
                     //tileManager[i].activeCount--;
                     buttonColors[i] = GRAY;  // Set button color to green for correct hit
-                    hit = true;
+                    //hit = true;
                     break;
                 }
             }
