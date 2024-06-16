@@ -12,6 +12,8 @@ void SpawnTile(TileManager* manager, int column) {
         if (!manager->tiles[i].active) {
             manager->tiles[i].rect = (Rectangle){ column * TILE_WIDTH, -TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT };
             manager->tiles[i].active = true;
+            manager->tiles[i].color = BLACK;
+            manager->tiles[i].wasHit = false;
             manager->activeCount++;
             break;
         }
@@ -33,7 +35,9 @@ void UpdateTiles(TileManager* manager, float deltaTime) {
 void DrawTiles(TileManager* manager) {
     for (int i = 0; i < MAX_TILES; i++) {
         if (manager->tiles[i].active) {
-            DrawRectangleRec(manager->tiles[i].rect, BLACK);
+            DrawRectangleRec(manager->tiles[i].rect, manager->tiles[i].color);
+        } else {
+            //DrawRectangleRec(manager->tiles[i].rect, GRAY);
         }
     }
 }

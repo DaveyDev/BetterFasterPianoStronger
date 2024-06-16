@@ -10,6 +10,8 @@
 typedef struct Tile {
     Rectangle rect;
     bool active;
+    Color color;
+    bool wasHit;
 } Tile;
 
 typedef struct TileManager {

@@ -44,7 +44,7 @@ int main(void) {
                 UpdateDrawGameplayScreen(&currentScreen, tileManager);
                 break;
             case SCORE:
-                UpdateDrawScoreScreen(&currentScreen);
+                UpdateDrawScoreScreen(&currentScreen, playtoy);
                 break;
             default:
                 WindowShouldClose();
