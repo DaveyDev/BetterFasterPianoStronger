@@ -8,7 +8,7 @@ void UpdateDrawLogoScreen(GameScreen *currentScreen, Texture2D logoTexture) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
     //DrawText("LOGO SCREEN", 20, 20, 40, LIGHTGRAY);
-    DrawTexture(logoTexture, GetScreenWidth()/2 - 128, GetScreenHeight()/2 - 128, WHITE);
+    DrawTexture(logoTexture, GetScreenWidth()/2 - 128, GetScreenHeight()/2 - 150, WHITE);
     
     float deltaTime = GetFrameTime();
     logoTime += deltaTime;

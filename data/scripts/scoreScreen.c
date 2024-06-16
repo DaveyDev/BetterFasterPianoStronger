@@ -16,9 +16,9 @@ void UpdateDrawScoreScreen(GameScreen *currentScreen, Font schluber) {
    
     //int testscore = score;
     //DrawText(TextFormat("SCORE: %i", score), 40, 150, 32, DARKGRAY);
-    //DrawText(TextFormat("BEST: %i", bestScore), 45, 200, 32, DARKGRAY);
-    DrawTextEx(schluber, TextFormat("SCORE: %i", score), (Vector2){ 120, 150 }, 48, 0, DARKGRAY);
-    DrawTextEx(schluber, TextFormat("BEST: %i", bestScore), (Vector2){ 120, 200 }, 48, 0, DARKGRAY);
+    //DrawText(TextFormat("BEST: %i", bestScore), 45, 200, 32, DARKGRAY); // meh, good enough. to do next time: make it look better
+    DrawTextEx(schluber, TextFormat("SCORE: %i", score), (Vector2){ 120, 150 }, 64, 0, DARKGRAY);
+    DrawTextEx(schluber, TextFormat("BEST:  %i", bestScore), (Vector2){ 120, 200 }, 64, 0, DARKGRAY);
     
     //DrawText(TextFormat("PRESS SPACE TO CONTINUE"), 120, 400, 25, DARKGRAY);
     //DrawText(TextFormat("R - RESET BEST SCORE"), 120, 450, 25, DARKGRAY);

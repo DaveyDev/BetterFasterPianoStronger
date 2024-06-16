@@ -8,19 +8,19 @@ Color bgColor = (Color){205, 255, 205, 255};
 Color noColor = (Color){0, 0, 0, 0};
 
 
-Rectangle playButton = {250 - 50, 350 - 16, 200, 50};
+Rectangle playButton = {250 - 50, 400 - 16, 200, 50};
 
 
 
 const char *menuText = "PLAY";
-Vector2 position = { 250, 350 };
+Vector2 position = { 250, 400 };
 float fontSize = 32.0f;
 float spacing = 2.0f;
 Color tint = BLACK;
 
 
 
-void UpdateDrawMenuScreen(GameScreen *currentScreen, Font playtoy) {
+void UpdateDrawMenuScreen(GameScreen *currentScreen, Font playtoy, Font schluber) {
     BeginDrawing();
     ClearBackground(RAYWHITE);
     
@@ -39,6 +39,8 @@ void UpdateDrawMenuScreen(GameScreen *currentScreen, Font playtoy) {
     // Use the custom drawing function
     
     DrawTextExAdjusted(playtoy, menuText, position, fontSize, spacing, tint);
+    //DrawText("v160624", 500, 760, 24, DARKGRAY);
+    DrawTextEx(schluber, "v160624", (Vector2){ 500, 760 }, 32, 0, BLACK);
     
     // Uncomment and adjust if needed
     // DrawTexture(logoTexture, GetScreenWidth()/2 - 128, GetScreenHeight()/2 - 128, WHITE);

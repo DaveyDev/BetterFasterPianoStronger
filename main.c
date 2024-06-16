@@ -41,7 +41,7 @@ int main(void) {
                 UpdateDrawLogoScreen(&currentScreen, logoTexture);
                 break;
             case MENU:
-                UpdateDrawMenuScreen(&currentScreen, playtoy);
+                UpdateDrawMenuScreen(&currentScreen, playtoy, schluber);
                 break;
             case GAMEPLAY:
                 UpdateDrawGameplayScreen(&currentScreen, tileManager);
