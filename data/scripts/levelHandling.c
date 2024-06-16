@@ -3,6 +3,9 @@
 
 
 void LoadLevel(const char *filename) {
+    
+    
+    
     FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("Failed to open level file.\n");

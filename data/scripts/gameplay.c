@@ -25,6 +25,15 @@ void ResetTiles(TileManager *tileManager) {
     bool buttonPressed[6]; // Add array to keep track of key pressed state
 
 
+    Music levelSong;
+
+void LoadSong(){
+    levelSong = LoadMusicStream("levels/level1/song.ogg");
+}
+
+void UnloadSong(){
+    UnloadMusicStream(levelSong);
+}
 
 
 void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManager) {
@@ -34,12 +43,15 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
     static float gameTime = 0.0f;
     
     if (firstEnter) {
+        LoadSong();
+        
         score = 0;
         ResetTiles(tileManager);
         currentLevelIndex = 0;
         gameTime = 0.0f;
         LoadLevel("levels/level1/tiles.txt");
         LoadLevelScore();
+        PlayMusicStream(levelSong);
         firstEnter = false;
         for (int i = 0; i < 6; i++) {
             buttonColors[i] = LIGHTGRAY;  // Initialize button colors to default
@@ -47,6 +59,7 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
         }        
     }
     
+
     //float deltaTime = GetFrameTime();
         //spawnTime += deltaTime;
 
@@ -60,6 +73,13 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
     float deltaTime = GetFrameTime();
     gameTime += deltaTime * 1000; // Convert to milliseconds
 
+    if(gameTime >= 1840){
+    UpdateMusicStream(levelSong);
+    }
+    
+
+
+
     // Check if it's time to spawn tiles from the level data
     if (currentLevelIndex < levelDataCount && gameTime >= levelData[currentLevelIndex].timestamp) {
         for (int i = 0; i < 6; i++) {
@@ -72,7 +92,8 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
             
             FreeLevelData();
             firstEnter = true;
-            //score = 0;            
+            //score = 0;
+            UnloadSong();            
             *currentScreen = SCORE;
             return; // Exit function early to avoid further updates/draws
         }        
@@ -125,7 +146,7 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
         if (keyPressed) {
             //bool hit = false;
             for (int j = 0; j < MAX_TILES; j++) {
-                if (tileManager[i].tiles[j].active && tileManager[i].tiles[j].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 50 && tileManager[i].tiles[j].rect.y + TILE_HEIGHT <= SCREEN_HEIGHT + 50) {
+                if (tileManager[i].tiles[j].active && tileManager[i].tiles[j].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 65 && tileManager[i].tiles[j].rect.y + TILE_HEIGHT <= SCREEN_HEIGHT + 20) {
                     tileManager[i].tiles[j].wasHit = true;
                     
                     if(!buttonPressed[i]){

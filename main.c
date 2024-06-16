@@ -19,6 +19,7 @@
 
 int main(void) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Better Faster Piano Stronger");
+    InitAudioDevice();
      
     GameScreen currentScreen = LOGO;
 
@@ -59,6 +60,7 @@ int main(void) {
     UnloadFont(schluber);
     
     //SaveGame(score);
+    CloseAudioDevice();
     CloseWindow();
     return 0;
 }
