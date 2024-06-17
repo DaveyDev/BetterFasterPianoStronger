@@ -5,7 +5,7 @@ void UpdateDrawScoreScreen(GameScreen *currentScreen, Font schluber) {
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    //DrawText("Betoniarz to pedal", 20, 20, 40, LIGHTGRAY);
+    
     //DrawTexture(logoTexture, GetScreenWidth()/2 - 128, GetScreenHeight()/2 - 128, WHITE);
    
     if(score > bestScore) bestScore = score;
