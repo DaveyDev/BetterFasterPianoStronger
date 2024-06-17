@@ -146,7 +146,7 @@ void UpdateDrawGameplayScreen(GameScreen *currentScreen, TileManager *tileManage
         if (keyPressed) {
             //bool hit = false;
             for (int j = 0; j < MAX_TILES; j++) {
-                if (tileManager[i].tiles[j].active && tileManager[i].tiles[j].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 65 && tileManager[i].tiles[j].rect.y + TILE_HEIGHT <= SCREEN_HEIGHT + 20) {
+                if (tileManager[i].tiles[j].active && tileManager[i].tiles[j].rect.y + TILE_HEIGHT >= SCREEN_HEIGHT - 75 && tileManager[i].tiles[j].rect.y + TILE_HEIGHT <= SCREEN_HEIGHT + 20) {
                     tileManager[i].tiles[j].wasHit = true;
                     
                     if(!buttonPressed[i]){
