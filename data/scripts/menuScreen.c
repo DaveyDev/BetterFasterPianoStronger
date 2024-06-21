@@ -40,7 +40,7 @@ void UpdateDrawMenuScreen(GameScreen *currentScreen, Font playtoy, Font schluber
     
     DrawTextExAdjusted(playtoy, menuText, position, fontSize, spacing, tint);
     //DrawText("v160624", 500, 760, 24, DARKGRAY);
-    DrawTextEx(schluber, "v160624", (Vector2){ 500, 760 }, 32, 0, BLACK);
+    DrawTextEx(schluber, "v210624", (Vector2){ 500, 760 }, 32, 0, BLACK);
     
     // Uncomment and adjust if needed
     // DrawTexture(logoTexture, GetScreenWidth()/2 - 128, GetScreenHeight()/2 - 128, WHITE);
@@ -51,7 +51,7 @@ void UpdateDrawMenuScreen(GameScreen *currentScreen, Font playtoy, Font schluber
 
     EndDrawing();
     
-    if (IsKeyPressed(KEY_ENTER)) {
+    if (IsKeyPressed(KEY_SPACE)) {
         *currentScreen = GAMEPLAY; // Change current screen
     }
 }

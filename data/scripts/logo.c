@@ -21,7 +21,7 @@ void UpdateDrawLogoScreen(GameScreen *currentScreen, Texture2D logoTexture) {
     }
     EndDrawing();
     
-    if (IsKeyPressed(KEY_ENTER)) {
+    if (IsKeyPressed(KEY_SPACE)) {
         *currentScreen = MENU; // Change current screen
     }
 }
